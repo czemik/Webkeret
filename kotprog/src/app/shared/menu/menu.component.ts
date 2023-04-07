@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class MenuComponent {
 
+  @Output() onCloseSidenav: EventEmitter<boolean> = new EventEmitter();
+
+
+  close(){
+    this.onCloseSidenav.emit(true);
+  }
 }

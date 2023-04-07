@@ -1,1 +1,23 @@
-<p>menu works!</p>
+
+<mat-nav-list>
+    <a mat-list-item routerLink="/main" (click)="close()">
+        <mat-icon>grid_view</mat-icon>
+        <span>Főoldal</span>
+    </a>
+    <a mat-list-item routerLink="/report" (click)="close()">
+        <mat-icon>report</mat-icon>
+        <span>Lejelentés</span>
+    </a>
+    <a mat-list-item routerLink="/old-reports" (click)="close()">
+        <mat-icon>info</mat-icon>
+        <span>Statisztika</span>
+    </a>
+    <a mat-list-item routerLink="/login" (click)="close()">
+        <mat-icon>login</mat-icon>
+        <span>Bejelentkezés</span>
+    </a>
+    <a mat-list-item routerLink="/register" (click)="close()">
+        <mat-icon>register</mat-icon>
+        <span>Regisztráció</span>
+    </a>
+</mat-nav-list>
