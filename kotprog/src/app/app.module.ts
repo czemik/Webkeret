@@ -11,6 +11,7 @@ import { OldReportsComponent } from './pages/old-reports/old-reports.component';
 import { MenuComponent } from './shared/menu/menu.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -39,6 +40,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatIconModule,
     FlexLayoutModule,
     MatListModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
