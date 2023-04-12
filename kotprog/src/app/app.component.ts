@@ -8,6 +8,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class AppComponent {
   title = 'kotprog';
+  page = 'main';
+
+  constructor(){}
 
   onToggleSidenav(sidenav: MatSidenav){
     sidenav.toggle();
@@ -17,5 +20,5 @@ export class AppComponent {
     if (event) sidenav.close()
   }
 
-
+ 
 }
