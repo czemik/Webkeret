@@ -1,6 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
-    <app-menu></app-menu>
+    <app-menu [loggedInUser]="loggedInUser" (ongLogout)="logout($event)"></app-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -18,8 +18,9 @@
           <li><a routerLink="/main">Főoldal</a></li>
           <li><a routerLink="/report">Lejelentés</a></li>
           <li><a routerLink="/old-reports">Statisztika</a></li>
-          <li><a routerLink="/login">Bejelentkezés</a></li>
-          <li><a routerLink="/register">Regisztráció</a></li>
+          <li *ngIf="!(loggedInUser)"><a routerLink="/login">Bejelentkezés</a></li>
+          <li *ngIf="(loggedInUser)"><a routerLink="/login" (click)="logout()">Kijelentkezés</a></li>
+          <li *ngIf="!(loggedInUser)"><a routerLink="/register">Regisztráció</a></li>
         </ul>
       </div>
     </mat-toolbar>
