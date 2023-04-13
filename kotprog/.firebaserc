@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "webfelj-oqqa67": {
+      "hosting": {
+        "kotprog": [
+          "webfelj-oqqa67"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "webfelj-oqqa67"
+  }
+}
