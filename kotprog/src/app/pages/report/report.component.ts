@@ -1,22 +1,61 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FileService } from '../../shared/services/file.service';
+import { ReportService } from '../../shared/services/report.service';
+import { Report } from '../../shared/models/Report';
+
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
-export class ReportComponent {
-  amount = new FormControl('');
+export class ReportComponent implements OnInit{
+  months: Array<Number> = [1,2,3,4,5,6,7,8,9,10,11,12];
+  years: Array<Number> = [2020,2021,2022,2023,2024,2025];
   reportForm = new FormGroup({
-    amount: new FormControl(''),
-    image: new FormControl(''),
+    amount: new FormControl('',Validators.required),
+    image: new FormControl('',Validators.required),
+    year: new FormControl(0,Validators.required),
+    month: new FormControl(0,Validators.required),
   });
   loading: boolean = false;
 
+  constructor(private reportService: ReportService, private fileService: FileService){}
+
+  ngOnInit(): void {
+    
+  }
+
+  chooseFile(event: any){
+    this.fileService.chooseFile(event)
+  }
+
   submit(){
+    this.loading = true;
+    const user: string = JSON.parse(localStorage.getItem('user') as string).uid as string;
+    const report: Report = {
+      uid: user,
+      year: this.reportForm.get('year')?.value as number,
+      month: this.reportForm.get('month')?.value as number,
+      image: {
+        name: user+'_'+(this.reportForm.get('year')?.value as number)+'_'+(this.reportForm.get('month')?.value as number),
+        path: 'images/' + user
+      }
+    }
+    this.reportService.create(report).then(cred => {
+      console.log('Successful report upload!')
+      console.log(cred)
+      this.loading = false;
+    }).catch(err => {
+      console.error(err);
+    })
+
+    this.fileService.upload(report);
+
 
   }
 
+  
 
 }

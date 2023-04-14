@@ -7,8 +7,24 @@
         </mat-card-header>
         <mat-card-content class="div-flex">
             <form [formGroup]="reportForm">
-                <mat-form-field><mat-label for="amount">Óraállás: </mat-label><input matInput type="email" [formControl]="amount"/></mat-form-field>
-                <input id="image" type="file"/>
+                <mat-form-field><mat-label for="amount">Óraállás: </mat-label><input matInput type="email" formControlName="amount"/></mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Év: </mat-label>
+                    <mat-select matNativeControl required formControlName="year">
+                        <mat-option *ngFor="let year of years" value="{{year}}">{{year}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Hónap: </mat-label>
+                    <mat-select matNativeControl required formControlName="month">
+                      <mat-option *ngFor="let month of months" value="{{month}}">{{month}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+                
+                <input id="image" formControlName="image" type="file" (change)="chooseFile($event)"/>
                 <span><button mat-raised-button (click)="submit()">Lejelentés</button></span>
             </form>
             

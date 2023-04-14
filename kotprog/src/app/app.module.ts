@@ -17,6 +17,7 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import {MatSelectModule} from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule} from '@angular/material/form-field';
@@ -29,6 +30,9 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { AngularFireModule} from '@angular/fire/compat';
+import { Storage } from '@angular/fire/storage';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,13 +59,14 @@ import { AngularFireModule} from '@angular/fire/compat';
     MatInputModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatSelectModule,
     AngularFireModule.initializeApp(environment.firebase),
     //provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [] ,
   bootstrap: [AppComponent]
 })
 export class AppModule {

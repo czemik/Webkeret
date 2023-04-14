@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common'
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../shared/models/User';
 import { UserService } from '../../shared/services/user.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,12 +13,12 @@ import { UserService } from '../../shared/services/user.service';
 })
 export class RegisterComponent {
   registerForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-    rePassword: new FormControl(''),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+    rePassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
     name: new FormGroup({
-      firstname: new FormControl(''),
-      lastname: new FormControl('')
+      firstname: new FormControl('', Validators.required),
+      lastname: new FormControl('', Validators.required)
     })
   });
 

@@ -5,12 +5,15 @@ import { ReportRoutingModule } from './report-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
+
+
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     ReportRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ]
 })
 export class ReportModule { }
