@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
   { path: 'report', loadChildren: () => import('./pages/report/report.module').then(m => m.ReportModule), canActivate:[AuthGuard] },
   { path: 'old-reports', loadChildren: () => import('./pages/old-reports/old-reports.module').then(m => m.OldReportsModule), canActivate:[AuthGuard] },
-  { path: '', redirectTo: '/login', pathMatch: 'full'},
+  { path: '', redirectTo: '/main', pathMatch: 'full'},
   { path: '**', redirectTo: '/not-found'}
 ];
 

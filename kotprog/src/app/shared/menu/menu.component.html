@@ -4,11 +4,11 @@
         <mat-icon>grid_view</mat-icon>
         <span>Főoldal</span>
     </a>
-    <a mat-list-item routerLink="/report" (click)="close()">
+    <a mat-list-item routerLink="/report" (click)="close()" *ngIf="loggedInUser">
         <mat-icon>report</mat-icon>
         <span>Lejelentés</span>
     </a>
-    <a mat-list-item routerLink="/old-reports" (click)="close()">
+    <a mat-list-item routerLink="/old-reports" (click)="close()" *ngIf="loggedInUser">
         <mat-icon>info</mat-icon>
         <span>Statisztika</span>
     </a>

@@ -3,7 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common'
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
-
+import { User } from '../../shared/models/User';
+import { UserService } from '../../shared/services/user.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -20,7 +21,7 @@ export class RegisterComponent {
     })
   });
 
-  constructor(private location: Location, private authService: AuthService, private router: Router){
+  constructor(private location: Location, private authService: AuthService, private router: Router, private userService: UserService){
 
   }
 
@@ -29,7 +30,22 @@ export class RegisterComponent {
     const emailReg: string = this.registerForm.get('email')?.value || '';
     const pwReg: string = this.registerForm.get('password')?.value || '';
     this.authService.register(emailReg, pwReg).then(cred=>{
-      this.router.navigateByUrl('/login');
+      const user: User = {
+        id: cred.user?.uid as string,
+        email: emailReg,
+        name: {
+          firstname: this.registerForm.get('name.firstname')?.value as string,
+          lastname: this.registerForm.get('name.lastname')?.value as string
+        }
+      }
+      this.userService.create(user).then(_ => {
+        console.log("Successful");
+        console.log(user);
+      }).catch(err =>{
+        console.error(err);
+      })
+      //this.router.navigateByUrl('/login');
+
     }).catch(err => {
 
     });
