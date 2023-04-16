@@ -15,6 +15,11 @@ export class ReportService {
     return this.afs.collection<Report>(this.collectionName).add(report);
   }
 
+  getAll(){
+    const user: string = JSON.parse(localStorage.getItem('user') as string).uid as string;
+    return this.afs.collection<Report>(this.collectionName, ref => ref.where('uid', '==', user)).valueChanges();
+  }
+
   update(){
 
   }

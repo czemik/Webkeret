@@ -10,10 +10,6 @@ export class FileService {
 
   file: any= {};
 
-  metadata = {
-    contentType: 'image/jpeg',
-  };
-
   constructor() { }
 
   storage = getStorage();
@@ -23,8 +19,8 @@ export class FileService {
   }
 
   upload(report: Report){
-    const storageRef = ref(this.storage, 'images/' + (JSON.parse(localStorage.getItem('user')as string).uid as string) + '/' + report.year +'_'+ report.month + '.jpg');
-    uploadBytes(storageRef, this.file, this.metadata).then((snapshot) => {
+    const storageRef = ref(this.storage, 'images/' + (JSON.parse(localStorage.getItem('user')as string).uid as string) + '/' + report.year +'_'+ report.month);
+    uploadBytes(storageRef, this.file).then((snapshot) => {
       console.log('Uploaded a file!');
     });
    

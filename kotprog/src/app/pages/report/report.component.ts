@@ -14,12 +14,14 @@ export class ReportComponent implements OnInit{
   months: Array<Number> = [1,2,3,4,5,6,7,8,9,10,11,12];
   years: Array<Number> = [2020,2021,2022,2023,2024,2025];
   reportForm = new FormGroup({
-    amount: new FormControl('',Validators.required),
+    amount: new FormControl(0,Validators.required),
     image: new FormControl('',Validators.required),
     year: new FormControl(0,Validators.required),
     month: new FormControl(0,Validators.required),
   });
+
   loading: boolean = false;
+  extension?: string;
 
   constructor(private reportService: ReportService, private fileService: FileService){}
 
@@ -28,19 +30,24 @@ export class ReportComponent implements OnInit{
   }
 
   chooseFile(event: any){
-    this.fileService.chooseFile(event)
+    this.fileService.chooseFile(event);
+    const file: File = event.target.files[0];
+    this.extension = file.name.split('.').pop();
   }
 
   submit(){
     this.loading = true;
     const user: string = JSON.parse(localStorage.getItem('user') as string).uid as string;
+    const name: string = (this.reportForm.get('year')?.value as number)+'_'+(this.reportForm.get('month')?.value as number)
     const report: Report = {
+      amount: this.reportForm.get('amount')?.value as number,
       uid: user,
       year: this.reportForm.get('year')?.value as number,
       month: this.reportForm.get('month')?.value as number,
       image: {
-        name: user+'_'+(this.reportForm.get('year')?.value as number)+'_'+(this.reportForm.get('month')?.value as number),
-        path: 'images/' + user
+        name: name,
+        path: 'images/' + user + '/' + name + '.' + this.extension as string,
+        extension: this.extension as string
       }
     }
     this.reportService.create(report).then(cred => {
