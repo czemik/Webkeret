@@ -46,7 +46,7 @@ export class ReportComponent implements OnInit{
       month: this.reportForm.get('month')?.value as number,
       image: {
         name: name,
-        path: 'images/' + user + '/' + name + '.' + this.extension as string,
+        path: 'images/' + user + '/' + name,
         extension: this.extension as string
       }
     }
