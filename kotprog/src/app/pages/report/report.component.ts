@@ -38,12 +38,13 @@ export class ReportComponent implements OnInit{
   submit(){
     this.loading = true;
     const user: string = JSON.parse(localStorage.getItem('user') as string).uid as string;
-    const name: string = (this.reportForm.get('year')?.value as number)+'_'+(this.reportForm.get('month')?.value as number)
+    const name: string = +(this.reportForm.get('year')?.value || 0)+'_'+(+(this.reportForm.get('month')?.value || 0))
     const report: Report = {
-      amount: this.reportForm.get('amount')?.value as number,
+      id: '',
+      amount: +(this.reportForm.get('amount')?.value ||0),
       uid: user,
-      year: this.reportForm.get('year')?.value as number,
-      month: this.reportForm.get('month')?.value as number,
+      year: +(this.reportForm.get('year')?.value || 0),
+      month: +(this.reportForm.get('month')?.value || 0),
       image: {
         name: name,
         path: 'images/' + user + '/' + name,

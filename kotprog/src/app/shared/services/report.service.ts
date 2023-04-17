@@ -12,7 +12,8 @@ export class ReportService {
   constructor(private afs: AngularFirestore) { }  
 
   create(report: Report){
-    return this.afs.collection<Report>(this.collectionName).add(report);
+    report.id = this.afs.createId();
+    return this.afs.collection<Report>(this.collectionName).doc(report.id).set(report);
   }
 
   getAll(){
@@ -20,12 +21,13 @@ export class ReportService {
     return this.afs.collection<Report>(this.collectionName, ref => ref.where('uid', '==', user)).valueChanges();
   }
 
-  update(){
+  update(id: string){
 
   }
 
-  delete(){
+  delete(id: string, url: string){
 
+    return this.afs.collection<Report>(this.collectionName).doc(id).delete();
   }
 
 

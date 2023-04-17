@@ -25,13 +25,14 @@ export class OldReportsComponent implements OnInit, OnDestroy{
   constructor(private oldReportsService: OldReportsService, private reportService: ReportService, private storage: AngularFirestore){}
 
   ngOnDestroy(): void {
-   
+   for (let item of this.imageSub){
+    item.unsubscribe();
+   }
    this.reportSub?.unsubscribe();
   }
 
   ngOnInit(): void {
     this.reports = this.reportService.getAll();
-
     this.reportSub = this.reports.subscribe(reports => {
       for(let i=0; i < reports.length; i++){
         if(this.imageSub.length !== reports.length){
