@@ -17,7 +17,7 @@ import { OldReportsRoutingModule } from './old-reports-routing.module';
 export class OldReportsComponent implements OnInit, OnDestroy{
 
   @Input() imageInput?: Image;
-  loadedImages: Array<[Report, string]> = [];
+  loadedImages = new Map<string, string>;
   reports?: Observable<Array<Report>>;
   reportSub?: Subscription;
   imageSub: Array<Subscription> = [];
@@ -38,30 +38,25 @@ export class OldReportsComponent implements OnInit, OnDestroy{
         if(this.imageSub.length !== reports.length){
           this.imageSub.push();
         }
-        this.imageSub[i] = this.oldReportsService.loadImage(reports[i].image.path).subscribe(sad => {
-          if(reports.length === this.loadedImages.length){
-            this.loadedImages[i][0] = reports[i];
-            this.loadedImages[i][1] = sad;
-          }
-          else{
-            this.loadedImages.push([reports[i],sad]);
-          }
-          
-          console.log(sad);
+        this.imageSub[i] = this.oldReportsService.loadImage(reports[i].image.path).subscribe(url => {
+
+          this.loadedImages.set(reports[i].id, url)
+          console.log(url);
+
         })
       }
     });
 
   }
 
-  getImage(report: Report){
-    for (let item of this.loadedImages){
-        if (item[0].image.path === report.image.path){
-            console.log(item[1])
-            return item[1];
-        }
-    }
-    return 'sad';
+  delete(id: string){
+    this.oldReportsService.delete(this.loadedImages.get(id) || '');
+    this.reportService.delete(id);
+
+  }
+
+  getImage(id: string){
+    return this.loadedImages.get(id)
   }
 
 }

@@ -16,6 +16,8 @@ export class OldReportsService {
     return this.storage.ref(imageUrl).getDownloadURL();
   }
 
-
+  delete(url: string){
+    return this.storage.storage.refFromURL(url).delete();
+  }
 
 }

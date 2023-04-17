@@ -25,7 +25,7 @@ export class ReportService {
 
   }
 
-  delete(id: string, url: string){
+  delete(id: string){
 
     return this.afs.collection<Report>(this.collectionName).doc(id).delete();
   }
