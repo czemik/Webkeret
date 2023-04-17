@@ -21,8 +21,8 @@ export class ReportService {
     return this.afs.collection<Report>(this.collectionName, ref => ref.where('uid', '==', user)).valueChanges();
   }
 
-  update(id: string){
-
+  update(id: string, newAmount: number){
+    return this.afs.collection<Report>(this.collectionName).doc(id).update({amount: newAmount})
   }
 
   delete(id: string){

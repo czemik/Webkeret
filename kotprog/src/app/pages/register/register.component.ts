@@ -5,6 +5,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../shared/models/User';
 import { UserService } from '../../shared/services/user.service';
+import { MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ import { UserService } from '../../shared/services/user.service';
 })
 export class RegisterComponent {
   registerForm = new FormGroup({
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
     rePassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
     name: new FormGroup({
@@ -22,14 +23,18 @@ export class RegisterComponent {
     })
   });
 
-  constructor(private location: Location, private authService: AuthService, private router: Router, private userService: UserService){
+  constructor(private location: Location, private authService: AuthService, private router: Router, private userService: UserService, private snackBar: MatSnackBar){
 
   }
 
   onSubmit(){
-    console.log(this.registerForm.value)
     const emailReg: string = this.registerForm.get('email')?.value || '';
     const pwReg: string = this.registerForm.get('password')?.value || '';
+    const pwRegRe: string = this.registerForm.get('rePassword')?.value || '';
+    if(pwReg !== pwRegRe){
+      let snackBarRef = this.snackBar.open('A két jelszó nem egyezik!', 'Mégse');
+      return
+    } 
     this.authService.register(emailReg, pwReg).then(cred=>{
       const user: User = {
         id: cred.user?.uid as string,

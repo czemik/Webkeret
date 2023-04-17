@@ -7,16 +7,16 @@
         </mat-card-header>
         <mat-card-content class="div-flex">
             <form [formGroup]="reportForm">
-                <mat-form-field><mat-label for="amount">Óraállás: </mat-label><input matInput type="text" formControlName="amount"/></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label for="amount">Óraállás: </mat-label><input matInput type="text" formControlName="amount"/></mat-form-field>
 
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline">
                     <mat-label>Év: </mat-label>
                     <mat-select matNativeControl required formControlName="year">
                         <mat-option *ngFor="let year of years" value="{{year}}">{{year}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline" outline>
                     <mat-label>Hónap: </mat-label>
                     <mat-select matNativeControl required formControlName="month">
                       <mat-option *ngFor="let month of months" value="{{month}}">{{month}}</mat-option>

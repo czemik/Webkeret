@@ -8,6 +8,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getStorage } from '@angular/fire/storage';
 import { OldReportsRoutingModule } from './old-reports-routing.module';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-old-reports',
@@ -16,11 +17,12 @@ import { OldReportsRoutingModule } from './old-reports-routing.module';
 })
 export class OldReportsComponent implements OnInit, OnDestroy{
 
-  @Input() imageInput?: Image;
   loadedImages = new Map<string, string>;
   reports?: Observable<Array<Report>>;
   reportSub?: Subscription;
   imageSub: Array<Subscription> = [];
+  amount = new FormControl(0, Validators.required);
+  updateId: string = '';
   
   constructor(private oldReportsService: OldReportsService, private reportService: ReportService, private storage: AngularFirestore){}
 
@@ -53,6 +55,19 @@ export class OldReportsComponent implements OnInit, OnDestroy{
     this.oldReportsService.delete(this.loadedImages.get(id) || '');
     this.reportService.delete(id);
 
+  }
+
+  toggleUpdate(id: string){
+    console.log(id)
+    console.log(this.updateId)
+    if(id === this.updateId){this.updateId = ''}
+    else{
+      this.updateId = id;
+    }
+  }
+
+  update(id: string){
+    this.reportService.update(id,+(this.amount.value || 0));
   }
 
   getImage(id: string){
