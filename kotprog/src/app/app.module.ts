@@ -31,6 +31,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage, StorageModule } from '@angular/fire/storage';
 import { AngularFireModule} from '@angular/fire/compat';
+import { DateFormatPipe } from './shared/pipes/date-format.pipe';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { AngularFireModule} from '@angular/fire/compat';
     ReportComponent,
     OldReportsComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    DateFormatPipe
   ],
   imports: [
     BrowserModule,
