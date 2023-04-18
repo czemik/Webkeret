@@ -13,6 +13,8 @@ import { MatSnackBar} from '@angular/material/snack-bar'
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+
+  loading: boolean = false;
   registerForm = new FormGroup({
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
@@ -28,11 +30,13 @@ export class RegisterComponent {
   }
 
   onSubmit(){
+    this.loading = true;
     const emailReg: string = this.registerForm.get('email')?.value || '';
     const pwReg: string = this.registerForm.get('password')?.value || '';
     const pwRegRe: string = this.registerForm.get('rePassword')?.value || '';
     if(pwReg !== pwRegRe){
       let snackBarRef = this.snackBar.open('A két jelszó nem egyezik!', 'Mégse');
+      this.loading = false;
       return
     } 
     this.authService.register(emailReg, pwReg).then(cred=>{
@@ -46,14 +50,16 @@ export class RegisterComponent {
       }
       this.userService.create(user).then(_ => {
         console.log("Successful");
-        console.log(user);
+        this.loading = false;
+        //console.log(user);
       }).catch(err =>{
         console.error(err);
+        this.loading = false;
       })
-      //this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('/login');
 
     }).catch(err => {
-
+      this.loading = false;
     });
   }
   goBack(){

@@ -1,5 +1,4 @@
 mat-card{
-    width:20%;
     min-height: 40vh;
 }
 
@@ -9,6 +8,7 @@ mat-card{
     justify-content: center;
     text-align: center;
     align-self: center;
+    gap:10px 10px;
 }
 .main_component{
     min-height: 100vh;

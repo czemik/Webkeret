@@ -1,14 +1,14 @@
 <div class = "main_component div-flex">
     <mat-card class="div-flex card" *ngFor = "let report of reports | async">
         <mat-card-header>
-            <mat-card-title>{{report.year}}. {{report.month}}</mat-card-title>
+            <mat-card-title>{{report.year}}. {{report.month.toString() | dateFormat}}</mat-card-title>
         </mat-card-header>
         <mat-card-content class="div-flex">
             <p>Óraállás: {{report.amount}}</p>
             <img style="width:200px;" [src]="getImage(report.id)">
-            <button mat-raised-button (click)="toggleUpdate(report.id)" >Módosítás</button>
             <button mat-raised-button (click)="delete(report.id)" >Törlés</button>
-            <div *ngIf="report.id === updateId">
+            <button mat-raised-button (click)="toggleUpdate(report.id)" >Módosítás</button>
+            <div *ngIf="report.id === updateId" class="div-flex">
                 <mat-form-field><mat-label for="amount">Óraállás: </mat-label><input matInput type="text" [formControl]="amount"></mat-form-field>
                 <button mat-raised-button (click)="update(report.id)">Küldés</button>
             </div>

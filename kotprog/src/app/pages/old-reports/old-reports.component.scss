@@ -13,6 +13,8 @@
     justify-content: center;
     text-align: center;
     align-self: center;
+    gap:10px 10px;
+    
 }
 
 .main_component{
@@ -22,7 +24,7 @@
 
 
 .card {
-    width:30%;
+    min-width:350px;
     margin-bottom:30px;
 }
 

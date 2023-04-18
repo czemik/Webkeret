@@ -24,7 +24,7 @@
 }
 
 .loading-indicator::before{
-    counter:'';
+    content:'';
     display:block;
     position: fixed;
     top:0;
@@ -38,7 +38,7 @@
 
 form{
     display: inline-grid;
-    width:50%;
+    //width:50%;
     align-self: center;
 }
 

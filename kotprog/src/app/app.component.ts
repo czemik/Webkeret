@@ -25,14 +25,17 @@ export class AppComponent implements OnInit{
   }
 
   onToggleSidenav(sidenav: MatSidenav){
+    console.log('Toggle')
     sidenav.toggle();
   }
 
   onClose(event: any, sidenav: MatSidenav){
-    if (event) sidenav.close()
+    console.log('Close')
+    if(event === true){
+      sidenav.close()
+    }
+    
   }
-
-  
 
   logout(_?: boolean){
     this.authService.logout().then(() => {

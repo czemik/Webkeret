@@ -1,6 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
-    <app-menu [loggedInUser]="loggedInUser" (ongLogout)="logout($event)"></app-menu>
+    <app-menu [loggedInUser]="loggedInUser" (ongLogout)="logout($event)" (onCloseSidenav)="onClose($event, sidenav)"></app-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
