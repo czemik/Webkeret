@@ -9,6 +9,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getStorage } from '@angular/fire/storage';
 import { OldReportsRoutingModule } from './old-reports-routing.module';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-old-reports',
@@ -24,7 +25,7 @@ export class OldReportsComponent implements OnInit, OnDestroy{
   amount = new FormControl(0, Validators.required);
   updateId: string = '';
   
-  constructor(private oldReportsService: OldReportsService, private reportService: ReportService, private storage: AngularFirestore){}
+  constructor(private oldReportsService: OldReportsService, private reportService: ReportService, private storage: AngularFirestore, private snackBar: MatSnackBar){}
 
   ngOnDestroy(): void {
    for (let item of this.imageSub){
@@ -67,6 +68,10 @@ export class OldReportsComponent implements OnInit, OnDestroy{
   }
 
   update(id: string){
+    if((+(this.amount!.value!)).toString() === 'NaN'){
+      this.snackBar.open("Számot adj meg!", "Bezárás")
+      return;
+  }
     this.reportService.update(id,+(this.amount.value || 0));
   }
 

@@ -5,6 +5,7 @@ import { ReportService } from '../../shared/services/report.service';
 import { Report } from '../../shared/models/Report';
 import { Observable, Subscription, count, first, isEmpty, map, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -24,9 +25,11 @@ export class ReportComponent implements OnInit{
   });
   report!: Report;
   loading: boolean = false;
-  extension?: string;
+  extension?: string = undefined;
+  uploadable: boolean = false;
+  fileBool: boolean = false;
 
-  constructor(private reportService: ReportService, private fileService: FileService, private router: Router){}
+  constructor(private reportService: ReportService, private fileService: FileService, private router: Router, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
     
@@ -36,10 +39,39 @@ export class ReportComponent implements OnInit{
     this.fileService.chooseFile(event);
     const file: File = event.target.files[0];
     this.extension = file.name.split('.').pop();
+    if(this.extension === "jpg" || this.extension === "png"){
+      this.uploadable = true;
+      this.fileBool = true;
+    }
+    else{
+      this.uploadable = false;
+      this.snackBar.open("Nem megfelelő fájl formátum!", "Bezárás")
+    }
   }
 
   submit(){
     this.loading = true;
+    if (!this.fileBool){
+      this.snackBar.open("Tölts fel egy képet az óraállásról!", "Bezárás")
+      this.loading = false;
+      return
+    }
+    if (!this.uploadable){
+      this.snackBar.open("Nem megfelelő fájl formátum!", "Bezárás")
+      this.loading = false;
+      return
+    }
+    if (this.reportForm.get('year')!.value === 0 || this.reportForm.get('month')!.value === 0 || this.reportForm.get('amount')!.value === 0){
+      this.snackBar.open("Tölts ki minden mezőt!", "Bezárás")
+      this.loading = false;
+      return
+    }
+  
+    if((+(this.reportForm.get('amount')!.value!)).toString() === 'NaN'){
+        this.snackBar.open("Számot adj meg!", "Bezárás")
+        this.loading = false;
+        return;
+    }
     const user: string = JSON.parse(localStorage.getItem('user') as string).uid as string;
     const name: string = +(this.reportForm.get('year')?.value || 0)+'_'+(+(this.reportForm.get('month')?.value || 0))
     this.report = {
@@ -65,6 +97,7 @@ export class ReportComponent implements OnInit{
         this.create();
         
       }
+      else this.snackBar.open("Ilyen dátumra már lett feltöltve órállás!", "Bezárás")
       this.loading = false;
   });
   

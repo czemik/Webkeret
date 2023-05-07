@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit{
   });
   loading: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService){}
+  constructor(private router: Router, private authService: AuthService, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
     
@@ -26,13 +27,18 @@ export class LoginComponent implements OnInit{
   login(){
     const emailLog: string = this.loginForm.get('email')!.value || '';
     const pwLog:string = this.loginForm.get('password')!.value || ''; 
+    if(emailLog === '' || pwLog === ''){
+        this.loading = false;
+        this.snackBar.open("Tölts ki minden mezőt!", "Bezárás")
+        return
+    }
     this.loading = true;
     this.authService.login(emailLog, pwLog).then(cred => {
         this.loading = false;
         this.router.navigateByUrl('/main');
     }).catch(err => {
         this.loading = false;
-        console.error("Invalid");
+        this.snackBar.open("Nem megfelelő email és jelszó kombó!", "Bezárás")
     });
   }
 }
