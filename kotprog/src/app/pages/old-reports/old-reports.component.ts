@@ -52,8 +52,8 @@ export class OldReportsComponent implements OnInit, OnDestroy{
   }
 
   delete(id: string){
-    this.oldReportsService.delete(this.loadedImages.get(id) || '');
-    this.reportService.delete(id);
+    this.oldReportsService.delete(this.loadedImages.get(id) || '').then(x=>console.log("SUCCESSFUL PICTURE DELETE")).catch(x=>console.log(x));
+    this.reportService.delete(id).then(x=>console.log("SUCCESSFUL DELETE")).catch(x=>console.log(x));
 
   }
 
